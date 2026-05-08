@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="Business/Business.csproj" />
   <Project Path="Data Access/Data Access.csproj" />
+  <Project Path="Golbal/Golbal.csproj" Id="1b95a243-9a18-4c5c-98ba-dab0a0e98dd2" />
   <Project Path="Ice Cream Distribution System/Presentation.csproj" />
 </Solution>
