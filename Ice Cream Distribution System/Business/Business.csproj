@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Data Access\Data Access.csproj" />
+    <ProjectReference Include="..\Golbal\Golbal.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,4 +7,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Golbal\Golbal.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data Access Settings\" />
+  </ItemGroup>
+
 </Project>

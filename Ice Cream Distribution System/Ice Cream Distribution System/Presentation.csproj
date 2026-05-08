@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\Golbal\Golbal.csproj" />
   </ItemGroup>
 
   <ItemGroup>

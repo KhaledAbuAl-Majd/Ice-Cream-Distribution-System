@@ -28,8 +28,8 @@ CREATE TABLE People (
 CREATE TABLE Stores (
     ID INT PRIMARY KEY IDENTITY(1,1),
     Balance DECIMAL(18,4) DEFAULT 0,
-    AreaID INT REFERENCES Areas(ID),
-    OwnerID INT REFERENCES People(PersonID)
+    AreaID INT REFERENCES Areas(ID)  NOT NULL,
+    OwnerID INT REFERENCES People(PersonID)  NOT NULL
 );
 
 CREATE TABLE Cars (
@@ -41,7 +41,7 @@ CREATE TABLE Cars (
 CREATE TABLE Products (
     ID INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(150) NOT NULL,
-    ProductTypeID SMALLINT REFERENCES ProductTypes(ID),
+    ProductTypeID SMALLINT REFERENCES ProductTypes(ID)  NOT NULL,
     Price DECIMAL(18,4) NOT NULL
 );
 
@@ -49,10 +49,9 @@ CREATE TABLE Products (
 CREATE TABLE Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
     UserName NVARCHAR(50) UNIQUE NOT NULL,
-    PersonID INT UNIQUE REFERENCES People(PersonID),
+    PersonID INT UNIQUE REFERENCES People(PersonID) NOT NULl,
     PasswordHash NVARCHAR(100) NOT NULL, -- For BCrypt
     IsActive BIT DEFAULT 1,
-    AccountID TINYINT,
     IsDeleted BIT DEFAULT 0
 );
 
@@ -65,7 +64,7 @@ CREATE TABLE Representatives (
 
 CREATE TABLE Drivers (
     ID INT PRIMARY KEY IDENTITY(1,1),
-    UserID INT UNIQUE REFERENCES Users(UserID),
+    UserID INT UNIQUE REFERENCES Users(UserID) NOT NULL,
     CarID SMALLINT REFERENCES Cars(ID)
 );
 
@@ -74,24 +73,24 @@ CREATE TABLE Shifts (
     ID INT PRIMARY KEY IDENTITY(1,1),
     FromDate DATETIME2 NOT NULL,
     ToDate DATETIME2 NULL,
-    RepresentativeID INT REFERENCES Representatives(ID),
-    DriverID INT REFERENCES Drivers(ID),
-    CarID SMALLINT REFERENCES Cars(ID)
+    RepresentativeID INT REFERENCES Representatives(ID) NOT NULL,
+    DriverID INT REFERENCES Drivers(ID) NOT NULL,
+    CarID SMALLINT REFERENCES Cars(ID) NOT NULL
 );
 
 CREATE TABLE Invoices (
     ID INT PRIMARY KEY IDENTITY(1,1),
     Date DATETIME2 DEFAULT GETDATE(),
-    CarID SMALLINT REFERENCES Cars(ID),
-    StoreID INT REFERENCES Stores(ID),
+    CarID SMALLINT REFERENCES Cars(ID) NOT NULL,
+    StoreID INT REFERENCES Stores(ID) NOT NULL,
     Notes NVARCHAR(250) NULL,
     Total DECIMAL(18,4) DEFAULT 0
 );
 
 CREATE TABLE InvoiceRecords (
     ID INT PRIMARY KEY IDENTITY(1,1),
-    InvoiceID INT REFERENCES Invoices(ID) ON DELETE CASCADE,
-    ProductID INT REFERENCES Products(ID),
+    InvoiceID INT REFERENCES Invoices(ID) ON DELETE CASCADE  NOT NULL,
+    ProductID INT REFERENCES Products(ID)  NOT NULL,
     Count SMALLINT NOT NULL,
     ProductPrice DECIMAL(18,4) NOT NULL,
     Total AS (Count * ProductPrice) PERSISTED -- Computed Column
@@ -102,15 +101,15 @@ CREATE TABLE Payments (
     ID INT PRIMARY KEY IDENTITY(1,1),
     PayedValue DECIMAL(18,4) NOT NULL,
     Date DATETIME2 DEFAULT GETDATE(),
-    RepresentativeID INT REFERENCES Representatives(ID),
-    StoreID INT REFERENCES Stores(ID),
+    RepresentativeID INT REFERENCES Representatives(ID)  NOT NULL,
+    StoreID INT REFERENCES Stores(ID) NOT NULL,
     Notes NVARCHAR(250) NULL
 );
 
 CREATE TABLE RepresentativesStock (
     ID INT PRIMARY KEY IDENTITY(1,1),
-    ProductID INT REFERENCES Products(ID),
-    RepresentativeID INT REFERENCES Representatives(ID),
+    ProductID INT REFERENCES Products(ID) NOT NULL,
+    RepresentativeID INT REFERENCES Representatives(ID) NOT NULL,
     Count SMALLINT DEFAULT 0,
 );
 
