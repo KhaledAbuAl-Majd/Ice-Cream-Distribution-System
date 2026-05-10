@@ -116,7 +116,7 @@ namespace Data_Access
             {
                 using (var context = new IceCreamDistributionDbContext())
                 {
-                    return await context.Users.Include(u => u.Person).Where(u => !u.IsDeleted).ToListAsync();
+                    return await context.Users.Include(u => u.Person).Where(u => !u.IsDeleted).AsNoTracking().ToListAsync();
                 }
             }
             catch (Exception ex)
