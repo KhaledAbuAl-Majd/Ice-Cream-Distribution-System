@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ice_Cream_Distribution_System.Models;
+﻿namespace Ice_Cream_Distribution_System.Models;
 
 public partial class Area
 {

@@ -1,4 +1,4 @@
-﻿using Golbal.DBContext;
+﻿using Golbal.AppDbContext;
 using Ice_Cream_Distribution_System.Models;
 using Microsoft.EntityFrameworkCore;
 using MoneyMindManagerGlobal;

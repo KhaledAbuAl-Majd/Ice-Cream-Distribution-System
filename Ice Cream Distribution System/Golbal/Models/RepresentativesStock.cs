@@ -11,7 +11,7 @@ public partial class RepresentativesStock
 
     public int RepresentativeId { get; set; }
 
-    public short? Count { get; set; }
+    public short Count { get; set; }
 
     public virtual Product Product { get; set; } = null!;
 

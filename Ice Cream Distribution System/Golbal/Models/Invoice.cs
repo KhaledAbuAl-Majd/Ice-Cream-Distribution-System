@@ -15,7 +15,7 @@ public partial class Invoice
 
     public string? Notes { get; set; }
 
-    public decimal Total { get; set; }
+    public decimal Total { get; private set; }
 
     public virtual Car Car { get; set; } = null!;
 

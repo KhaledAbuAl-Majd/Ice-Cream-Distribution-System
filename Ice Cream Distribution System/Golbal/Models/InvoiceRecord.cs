@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ice_Cream_Distribution_System.Models;
+﻿namespace Ice_Cream_Distribution_System.Models;
 
 public partial class InvoiceRecord
 {
@@ -15,7 +12,7 @@ public partial class InvoiceRecord
 
     public decimal ProductPrice { get; set; }
 
-    public decimal Total { get; set; }
+    public decimal Total { get; private set; }
 
     public virtual Invoice Invoice { get; set; } = null!;
 

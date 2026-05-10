@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Ice_Cream_Distribution_System.Models;
+﻿using Ice_Cream_Distribution_System.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Golbal.DBContext;
+namespace Golbal.AppDbContext;
 
 public partial class IceCreamDistributionDbContext : DbContext
 {
@@ -94,37 +92,35 @@ public partial class IceCreamDistributionDbContext : DbContext
 
         modelBuilder.Entity<Invoice>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Invoices__3214EC27E1159F4F");
-
-            entity.HasIndex(e => new { e.CarId, e.StoreId }, "IX_Invoices_Car_Store");
-
-            entity.HasIndex(e => e.Date, "IX_Invoices_Date");
+            entity.HasKey(e => e.Id).HasName("PK__Invoices__3214EC277A90C751");
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CarId).HasColumnName("CarID");
             entity.Property(e => e.Date).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Notes).HasMaxLength(250);
             entity.Property(e => e.StoreId).HasColumnName("StoreID");
-            entity.Property(e => e.Total)
-                .HasDefaultValue(0m)
-                .HasColumnType("decimal(18, 4)");
+            entity.Property(e => e.Total).HasColumnType("decimal(18, 4)");
 
             entity.HasOne(d => d.Car).WithMany(p => p.Invoices)
                 .HasForeignKey(d => d.CarId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Invoices__CarID__5DCAEF64");
+                .HasConstraintName("FK__Invoices__CarID__0E6E26BF");
 
             entity.HasOne(d => d.Store).WithMany(p => p.Invoices)
                 .HasForeignKey(d => d.StoreId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Invoices__StoreI__5EBF139D");
+                .HasConstraintName("FK__Invoices__StoreI__0F624AF8");
         });
 
         modelBuilder.Entity<InvoiceRecord>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__InvoiceR__3214EC2765393649");
+            entity.HasKey(e => e.Id).HasName("PK__InvoiceR__3214EC27CF6C5061");
 
-            entity.HasIndex(e => e.InvoiceId, "IX_InvoiceRecords_InvoiceID");
+            entity.ToTable(tb =>
+                {
+                    tb.HasTrigger("Insert_Update_DeleteInvoiceRecords");
+                    tb.HasTrigger("trg_CalcualteStoresBalance_Insert_Update_DeleteInvoiceRecords");
+                });
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.InvoiceId).HasColumnName("InvoiceID");
@@ -136,17 +132,19 @@ public partial class IceCreamDistributionDbContext : DbContext
 
             entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceRecords)
                 .HasForeignKey(d => d.InvoiceId)
-                .HasConstraintName("FK__InvoiceRe__Invoi__628FA481");
+                .HasConstraintName("FK__InvoiceRe__Invoi__1332DBDC");
 
             entity.HasOne(d => d.Product).WithMany(p => p.InvoiceRecords)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__InvoiceRe__Produ__6383C8BA");
+                .HasConstraintName("FK__InvoiceRe__Produ__14270015");
         });
 
         modelBuilder.Entity<Payment>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Payments__3214EC2751AE37D3");
+
+            entity.ToTable(tb => tb.HasTrigger("trg_CalcualteStoresBalance_Insert_Update_DeletePayments"));
 
             entity.HasIndex(e => e.RepresentativeId, "IX_Payments_Representative");
 
@@ -234,7 +232,6 @@ public partial class IceCreamDistributionDbContext : DbContext
             entity.HasIndex(e => new { e.RepresentativeId, e.ProductId }, "IX_RepStock_Rep_Product");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Count).HasDefaultValue((short)0);
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
             entity.Property(e => e.RepresentativeId).HasColumnName("RepresentativeID");
 
@@ -284,9 +281,7 @@ public partial class IceCreamDistributionDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AreaId).HasColumnName("AreaID");
-            entity.Property(e => e.Balance)
-                .HasDefaultValue(0m)
-                .HasColumnType("decimal(18, 4)");
+            entity.Property(e => e.Balance).HasColumnType("decimal(18, 4)");
             entity.Property(e => e.OwnerId).HasColumnName("OwnerID");
 
             entity.HasOne(d => d.Area).WithMany(p => p.Stores)
@@ -316,7 +311,6 @@ public partial class IceCreamDistributionDbContext : DbContext
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.IsActive).HasDefaultValue(true);
-            entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             entity.Property(e => e.PasswordHash).HasMaxLength(100);
             entity.Property(e => e.PersonId).HasColumnName("PersonID");
             entity.Property(e => e.UserName).HasMaxLength(50);

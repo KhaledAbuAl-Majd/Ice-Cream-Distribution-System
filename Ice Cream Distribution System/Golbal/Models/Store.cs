@@ -1,10 +1,13 @@
-﻿namespace Ice_Cream_Distribution_System.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Ice_Cream_Distribution_System.Models;
 
 public partial class Store
 {
     public int Id { get; private set; }
 
-    public decimal Balance { get; set; }
+    public decimal Balance { get; private set; }
 
     public int AreaId { get; set; }
 

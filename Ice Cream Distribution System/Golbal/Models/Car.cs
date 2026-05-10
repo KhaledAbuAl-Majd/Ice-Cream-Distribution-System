@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ice_Cream_Distribution_System.Models;
+﻿namespace Ice_Cream_Distribution_System.Models;
 
 public partial class Car
 {
     public short Id { get; private set; }
 
-    public int? AreaId { get; set; }
+    public int AreaId { get; set; }
 
     public string? CarDetails { get; set; }
 
-    public virtual Area? Area { get; set; }
+    public virtual Area Area { get; set; } = null!;
 
     public virtual ICollection<Driver> Drivers { get; set; } = new List<Driver>();
 

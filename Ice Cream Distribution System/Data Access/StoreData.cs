@@ -5,76 +5,77 @@ using MoneyMindManagerGlobal;
 
 namespace Data_Access
 {
-    public static class ProductData
+    public static class StoreData
     {
-        public static async Task<Product?> Add(Product product)
+        public static async Task<Store?> Add(Store store)
         {
-            if (product is null) return null;
+            if (store is null) return null;
             try
             {
                 using (var context = new IceCreamDistributionDbContext())
                 {
-                    await context.Products.AddAsync(product);
+                    await context.Stores.AddAsync(store);
                     await context.SaveChangesAsync();
                 }
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة الصنف: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة المحل: {ex.Message}");
                 return null;
             }
-            return product;
+            return store;
         }
 
-        public static async Task<bool> Update(Product product)
+        public static async Task<bool> Update(Store store)
         {
-            if (product is null) return false;
+            if (store is null) return false;
             try
             {
                 using (var context = new IceCreamDistributionDbContext())
                 {
-                    context.Products.Update(product);
+                    context.Stores.Update(store);
                     await context.SaveChangesAsync();
                 }
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث الصنف: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث بيانات المحل: {ex.Message}");
                 return false;
             }
             return true;
         }
 
-        public static async Task<bool> Delete(int productID)
+        public static async Task<bool> Delete(int storeID)
         {
             try
             {
                 using (var context = new IceCreamDistributionDbContext())
                 {
-                    var product = await context.Products.FindAsync(productID);
-                    if (product == null) return false;
+                    var store = await context.Stores.FindAsync(storeID);
+                    if (store == null) return false;
 
-                    context.Products.Remove(product);
+                    context.Stores.Remove(store);
                     await context.SaveChangesAsync();
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف الصنف: {ex.Message}. تأكد أنه غير مرتبط بفواتير أو عهدة.");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف المحل: {ex.Message}. تأكد من عدم وجود فواتير مرتبطة به.");
                 return false;
             }
         }
 
-        public static async Task<Product?> Get(int productID)
+        public static async Task<Store?> Get(int storeID)
         {
             try
             {
                 using (var context = new IceCreamDistributionDbContext())
                 {
-                    return await context.Products
-                        .Include(p => p.ProductType)
-                        .FirstOrDefaultAsync(p => p.Id == productID);
+                    return await context.Stores
+                        .Include(s => s.Area)
+                        .Include(s => s.Owner)
+                        .FirstOrDefaultAsync(s => s.Id == storeID);
                 }
             }
             catch (Exception ex)
@@ -84,14 +85,15 @@ namespace Data_Access
             }
         }
 
-        public static async Task<List<Product>?> GetAll()
+        public static async Task<List<Store>?> GetAll()
         {
             try
             {
                 using (var context = new IceCreamDistributionDbContext())
                 {
-                    return await context.Products
-                        .Include(p => p.ProductType)
+                    return await context.Stores
+                        .Include(s => s.Area)
+                        .Include(s => s.Owner)
                         .AsNoTracking()
                         .ToListAsync();
                 }
