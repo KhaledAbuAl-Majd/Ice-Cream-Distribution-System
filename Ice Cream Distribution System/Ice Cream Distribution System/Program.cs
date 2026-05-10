@@ -1,3 +1,5 @@
+using MoneyMindManager_Presentation;
+
 namespace Ice_Cream_Distribution_System
 {
     internal static class Program
@@ -11,6 +13,7 @@ namespace Ice_Cream_Distribution_System
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            clsPL_Global.SubscribeToErrorOcrruedEvent();
             Application.Run(new Form1());
         }
     }

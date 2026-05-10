@@ -51,8 +51,8 @@ CREATE TABLE Users (
     UserName NVARCHAR(50) UNIQUE NOT NULL,
     PersonID INT UNIQUE REFERENCES People(PersonID) NOT NULl,
     PasswordHash NVARCHAR(100) NOT NULL, -- For BCrypt
-    IsActive BIT DEFAULT 1,
-    IsDeleted BIT DEFAULT 0
+    IsActive BIT DEFAULT 1 NOT NULL,
+    IsDeleted BIT DEFAULT 0 NOT NULL
 );
 
 -- 5. Staff & Field Workers
