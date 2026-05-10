@@ -9,7 +9,7 @@ public partial class Payment
 
     public decimal PayedValue { get; set; }
 
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
 
     public int RepresentativeId { get; set; }
 
