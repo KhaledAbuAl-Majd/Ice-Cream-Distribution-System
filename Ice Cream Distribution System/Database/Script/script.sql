@@ -27,7 +27,7 @@ CREATE TABLE People (
 -- 3. Inventory & Assets
 CREATE TABLE Stores (
     ID INT PRIMARY KEY IDENTITY(1,1),
-    Balance DECIMAL(18,4) DEFAULT 0,
+    Balance DECIMAL(18,4) DEFAULT 0 NOT NULL,
     AreaID INT REFERENCES Areas(ID)  NOT NULL,
     OwnerID INT REFERENCES People(PersonID)  NOT NULL
 );
