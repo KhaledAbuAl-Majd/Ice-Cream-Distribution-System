@@ -5,7 +5,7 @@ namespace Ice_Cream_Distribution_System.Models;
 
 public partial class Shift
 {
-    public int Id { get; private set; }
+    public int Id { get; set; }
 
     public DateTime FromDate { get; set; }
 

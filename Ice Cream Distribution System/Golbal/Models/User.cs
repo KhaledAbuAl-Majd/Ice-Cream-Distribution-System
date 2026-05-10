@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Ice_Cream_Distribution_System.Models;
+﻿namespace Ice_Cream_Distribution_System.Models;
 
 public partial class User
 {
@@ -13,9 +10,9 @@ public partial class User
 
     public string PasswordHash { get; set; } = null!;
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 
-    public bool? IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 
     public virtual Driver? Driver { get; set; }
 
