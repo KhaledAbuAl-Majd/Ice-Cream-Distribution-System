@@ -84,7 +84,7 @@ CREATE TABLE Invoices (
     CarID SMALLINT REFERENCES Cars(ID) NOT NULL,
     StoreID INT REFERENCES Stores(ID) NOT NULL,
     Notes NVARCHAR(250) NULL,
-    Total DECIMAL(18,4) DEFAULT 0
+    Total DECIMAL(18,4) DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE InvoiceRecords (
@@ -93,7 +93,7 @@ CREATE TABLE InvoiceRecords (
     ProductID INT REFERENCES Products(ID)  NOT NULL,
     Count SMALLINT NOT NULL,
     ProductPrice DECIMAL(18,4) NOT NULL,
-    Total AS (Count * ProductPrice) PERSISTED -- Computed Column
+    Total AS (Count * ProductPrice) PERSISTED NOT NULL-- Computed Column
 );
 
 -- 7. Finances & Tracking
@@ -110,7 +110,7 @@ CREATE TABLE RepresentativesStock (
     ID INT PRIMARY KEY IDENTITY(1,1),
     ProductID INT REFERENCES Products(ID) NOT NULL,
     RepresentativeID INT REFERENCES Representatives(ID) NOT NULL,
-    Count SMALLINT DEFAULT 0,
+    Count SMALLINT DEFAULT 0 NOT NULL,
 );
 
 -- 8. Performance Indexes
@@ -133,3 +133,26 @@ CREATE INDEX IX_RepStock_Rep_Product ON RepresentativesStock(RepresentativeID, P
 
 -- 5. تسريع البحث عن العمليات في منطقة معينة
 CREATE INDEX IX_Stores_Area ON Stores(AreaID);
+
+
+--triggers
+CREATE TRIGGER Insert_Update_DeleteInvoiceRecords
+ON InvoiceRecords
+AFTER INSERT , UPDATE, DELETE
+AS
+BEGIN
+	WITH ChangedInvoices  AS (
+		SELECT InvoiceID FROM inserted
+			UNION
+		SELECT InvoiceID FROM deleted
+	),
+	NewTotals AS(
+		SELECT IR.InvoiceID, SUM(IR.Total) AS ComputedTotal FROM InvoiceRecords IR INNER JOIN ChangedInvoices I ON IR.InvoiceID = I.InvoiceID
+		GROUP BY IR.InvoiceID
+	)
+	UPDATE Invoices
+    SET Total = ISNULL(t.ComputedTotal, 0)
+    FROM Invoices  
+    INNER JOIN NewTotals t ON Invoices.ID = t.InvoiceID; -- هنا كان الخطأ
+
+END;

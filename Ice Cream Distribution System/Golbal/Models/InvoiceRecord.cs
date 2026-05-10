@@ -15,7 +15,7 @@ public partial class InvoiceRecord
 
     public decimal ProductPrice { get; set; }
 
-    public decimal? Total { get; set; }
+    public decimal Total { get; set; }
 
     public virtual Invoice Invoice { get; set; } = null!;
 
