@@ -9,7 +9,7 @@ namespace IceCreamPro.Presentation.Forms
     {
         private Guna2ComboBox cmbCar = new(), cmbStore = new();
         private Guna2TextBox txtNotes = new();
-        private Guna2Button btnSave = new(), btnDelete = new(), btnClear = new();
+        private Guna2Button btnSave = new(), btnDelete = new(), btnClear = new(), btnAddRecord = new();
         private DataGridView dgv = new();
         private Invoice? _selected;
 
@@ -40,8 +40,9 @@ namespace IceCreamPro.Presentation.Forms
 
             StyleButton(btnSave, "💾 حفظ", AppColors.AccentBlue, new Point(20, 250));
             StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 250));
-            StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 250));
-            card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear });
+            StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(20, 325));
+            StyleButton(btnAddRecord, "إضافة عنصر", AppColors.BorderColor, new Point(148, 325));
+            card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear, btnAddRecord });
             card.Dock = DockStyle.Left;
             Controls.Add(card);
 
@@ -63,6 +64,7 @@ namespace IceCreamPro.Presentation.Forms
             btnSave.Click += BtnSave_Click;
             btnDelete.Click += BtnDelete_Click;
             btnClear.Click += (s, e) => ClearForm();
+            btnAddRecord.Click += BtnAddRecord_Click;
             dgv.SelectionChanged += (s, e) =>
             {
                 if (dgv.CurrentRow?.DataBoundItem is not Invoice inv) return;
@@ -71,6 +73,7 @@ namespace IceCreamPro.Presentation.Forms
                 foreach (var item in cmbStore.Items) { if ((item as dynamic)?.Id == inv.StoreId) { cmbStore.SelectedItem = item; break; } }
             };
         }
+
 
         private async Task LoadAsync()
         {
@@ -115,10 +118,31 @@ namespace IceCreamPro.Presentation.Forms
         {
             if (_selected is null) { clsPL_MessageBoxs.ShowErrorMessage("اختر فاتورة أولاً"); return; }
             if (clsPL_MessageBoxs.ShowConfirmMessage("حذف الفاتورة؟") != DialogResult.Yes) return;
-            try { await InvoiceService.Delete(_selected.Id); clsPL_MessageBoxs.ShowSuccessMessage("تم الحذف"); ClearForm(); await LoadAsync(); }
+            try
+            {
+
+                var result = await InvoiceService.Delete(_selected.Id);
+
+                if (!result)
+                    return;
+
+                clsPL_MessageBoxs.ShowSuccessMessage("تم الحذف");
+                ClearForm();
+                await LoadAsync();
+            }
             catch (Exception ex) { clsPL_MessageBoxs.ShowErrorMessage(ex.Message); }
         }
 
         private void ClearForm() { _selected = null; txtNotes.Text = ""; cmbCar.SelectedIndex = cmbStore.SelectedIndex = -1; }
+        private async void BtnAddRecord_Click(object? sender, EventArgs e)
+        {
+            var currentInvoiceId = _selected.Id;
+            using (var frm = new frmInvoiceRecords(currentInvoiceId))
+            {
+                frm.ShowDialog();
+                await LoadAsync();
+                clsPL_MessageBoxs.ShowSuccessMessage("تمت إضافة الصنف وحساب الإجمالي تلقائياً");
+            }
+        }
     }
 }
