@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [IceCreamDistributionDB]    Script Date: 10/05/2026 6:27:00 PM ******/
+/****** Object:  Database [IceCreamDistributionDB]    Script Date: 12/05/2026 3:27:36 PM ******/
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = N'IceCreamDistributionDB')
 BEGIN
 CREATE DATABASE [IceCreamDistributionDB]
@@ -87,13 +87,13 @@ ALTER DATABASE [IceCreamDistributionDB] SET QUERY_STORE (OPERATION_MODE = READ_W
 GO
 USE [IceCreamDistributionDB]
 GO
-/****** Object:  UserDefinedTableType [dbo].[List]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  UserDefinedTableType [dbo].[List]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.types st JOIN sys.schemas ss ON st.schema_id = ss.schema_id WHERE st.name = N'List' AND ss.name = N'dbo')
 CREATE TYPE [dbo].[List] AS TABLE(
 	[ID] [int] NOT NULL
 )
 GO
-/****** Object:  Table [dbo].[Areas]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Areas]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,7 +111,7 @@ CREATE TABLE [dbo].[Areas](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Cars]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Cars]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -129,7 +129,7 @@ CREATE TABLE [dbo].[Cars](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Drivers]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Drivers]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +151,7 @@ CREATE TABLE [dbo].[Drivers](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[InvoiceRecords]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[InvoiceRecords]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -172,7 +172,7 @@ CREATE TABLE [dbo].[InvoiceRecords](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Invoices]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Invoices]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -193,7 +193,7 @@ CREATE TABLE [dbo].[Invoices](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Payments]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Payments]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -214,7 +214,7 @@ CREATE TABLE [dbo].[Payments](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[People]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[People]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -234,7 +234,7 @@ CREATE TABLE [dbo].[People](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Products]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -253,7 +253,7 @@ CREATE TABLE [dbo].[Products](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[ProductTypes]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[ProductTypes]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -270,7 +270,7 @@ CREATE TABLE [dbo].[ProductTypes](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Representatives]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Representatives]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -292,7 +292,7 @@ CREATE TABLE [dbo].[Representatives](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[RepresentativesStock]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[RepresentativesStock]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -311,7 +311,7 @@ CREATE TABLE [dbo].[RepresentativesStock](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Shifts]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Shifts]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -332,7 +332,7 @@ CREATE TABLE [dbo].[Shifts](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Stores]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Stores]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -351,7 +351,7 @@ CREATE TABLE [dbo].[Stores](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -380,7 +380,7 @@ CREATE TABLE [dbo].[Users](
 ) ON [PRIMARY]
 END
 GO
-/****** Object:  Index [IX_Payments_Representative]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Index [IX_Payments_Representative]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Payments]') AND name = N'IX_Payments_Representative')
 CREATE NONCLUSTERED INDEX [IX_Payments_Representative] ON [dbo].[Payments]
 (
@@ -389,14 +389,14 @@ CREATE NONCLUSTERED INDEX [IX_Payments_Representative] ON [dbo].[Payments]
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_Products_Name]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Index [IX_Products_Name]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Products]') AND name = N'IX_Products_Name')
 CREATE NONCLUSTERED INDEX [IX_Products_Name] ON [dbo].[Products]
 (
 	[Name] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_RepStock_Rep_Product]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Index [IX_RepStock_Rep_Product]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[RepresentativesStock]') AND name = N'IX_RepStock_Rep_Product')
 CREATE NONCLUSTERED INDEX [IX_RepStock_Rep_Product] ON [dbo].[RepresentativesStock]
 (
@@ -404,7 +404,7 @@ CREATE NONCLUSTERED INDEX [IX_RepStock_Rep_Product] ON [dbo].[RepresentativesSto
 	[ProductID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Shifts_Dates]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Index [IX_Shifts_Dates]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Shifts]') AND name = N'IX_Shifts_Dates')
 CREATE NONCLUSTERED INDEX [IX_Shifts_Dates] ON [dbo].[Shifts]
 (
@@ -412,14 +412,14 @@ CREATE NONCLUSTERED INDEX [IX_Shifts_Dates] ON [dbo].[Shifts]
 	[ToDate] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Stores_Area]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Index [IX_Stores_Area]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Stores]') AND name = N'IX_Stores_Area')
 CREATE NONCLUSTERED INDEX [IX_Stores_Area] ON [dbo].[Stores]
 (
 	[AreaID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Users_PersonID]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Index [IX_Users_PersonID]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = N'IX_Users_PersonID')
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Users_PersonID] ON [dbo].[Users]
 (
@@ -430,7 +430,7 @@ WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNOR
 GO
 SET ANSI_PADDING ON
 GO
-/****** Object:  Index [IX_Users_UserName]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Index [IX_Users_UserName]    Script Date: 12/05/2026 3:27:37 PM ******/
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND name = N'IX_Users_UserName')
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Users_UserName] ON [dbo].[Users]
 (
@@ -496,7 +496,6 @@ GO
 IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK__InvoiceRe__Invoi__1332DBDC]') AND parent_object_id = OBJECT_ID(N'[dbo].[InvoiceRecords]'))
 ALTER TABLE [dbo].[InvoiceRecords]  WITH CHECK ADD  CONSTRAINT [FK__InvoiceRe__Invoi__1332DBDC] FOREIGN KEY([InvoiceID])
 REFERENCES [dbo].[Invoices] ([ID])
-ON DELETE CASCADE
 GO
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK__InvoiceRe__Invoi__1332DBDC]') AND parent_object_id = OBJECT_ID(N'[dbo].[InvoiceRecords]'))
 ALTER TABLE [dbo].[InvoiceRecords] CHECK CONSTRAINT [FK__InvoiceRe__Invoi__1332DBDC]
@@ -646,7 +645,7 @@ BEGIN
     );
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SP_Store_CalcualteBalance]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  StoredProcedure [dbo].[SP_Store_CalcualteBalance]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -662,18 +661,18 @@ AS
 BEGIN
 
 	WITH StoresPayments AS(
-		SELECT p.StoreID,SUM(p.PayedValue) as TotalPayed FROM Payments p JOIN @StoreIDs si ON p.StoreID = si.ID
-		GROUP BY p.StoreID
+		SELECT si.ID AS StoreID,SUM(ISNULL(p.PayedValue,0)) as TotalPayed FROM Payments p RIGHT JOIN @StoreIDs si ON p.StoreID = si.ID
+		GROUP BY si.ID
 	),
 	StoresInvoices AS (
-		SELECT i.StoreID,SUM(ir.Total) as TotalInvoice FROM InvoiceRecords ir
-		JOIN Invoices i ON ir.InvoiceID = i.ID
-		JOIN @StoreIDs si ON i.StoreID = si.ID
-		GROUP BY i.StoreID
+		SELECT si.ID AS StoreID,SUM(ISNULL(ir.Total,0)) as TotalInvoice FROM InvoiceRecords ir
+		RIGHT JOIN Invoices i ON ir.InvoiceID = i.ID
+		RIGHT JOIN @StoreIDs si ON i.StoreID = si.ID
+		GROUP BY si.ID
 	),
 	StoresBalance AS(
-		SELECT sp.StoreID, (ISNULL(TotalInvoice, 0) - ISNULL(TotalPayed, 0)) AS Balance
-		FROM StoresPayments sp JOIN StoresInvoices si
+		SELECT si.StoreID, (ISNULL(TotalInvoice, 0) - ISNULL(TotalPayed, 0)) AS Balance
+		FROM StoresPayments sp right JOIN StoresInvoices si
 		ON sp.StoreID = si.StoreID
 	)
 
@@ -684,7 +683,7 @@ BEGIN
 
 END;
 GO
-/****** Object:  Trigger [dbo].[Insert_Update_DeleteInvoiceRecords]    Script Date: 10/05/2026 6:27:01 PM ******/
+/****** Object:  Trigger [dbo].[Insert_Update_DeleteInvoiceRecords]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -702,8 +701,8 @@ BEGIN
 		SELECT InvoiceID FROM deleted
 	),
 	NewTotals AS(
-		SELECT IR.InvoiceID, SUM(IR.Total) AS ComputedTotal FROM InvoiceRecords IR INNER JOIN ChangedInvoices I ON IR.InvoiceID = I.InvoiceID
-		GROUP BY IR.InvoiceID
+		SELECT I.InvoiceID, SUM(IR.Total) AS ComputedTotal FROM InvoiceRecords IR Right JOIN ChangedInvoices I ON IR.InvoiceID = I.InvoiceID
+		GROUP BY I.InvoiceID
 	)
 	UPDATE Invoices
     SET Total = ISNULL(t.ComputedTotal, 0)
@@ -714,7 +713,7 @@ END;'
 GO
 ALTER TABLE [dbo].[InvoiceRecords] ENABLE TRIGGER [Insert_Update_DeleteInvoiceRecords]
 GO
-/****** Object:  Trigger [dbo].[trg_CalcualteStoresBalance_Insert_Update_DeleteInvoiceRecords]    Script Date: 10/05/2026 6:27:02 PM ******/
+/****** Object:  Trigger [dbo].[trg_CalcualteStoresBalance_Insert_Update_DeleteInvoiceRecords]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -747,7 +746,7 @@ END;'
 GO
 ALTER TABLE [dbo].[InvoiceRecords] ENABLE TRIGGER [trg_CalcualteStoresBalance_Insert_Update_DeleteInvoiceRecords]
 GO
-/****** Object:  Trigger [dbo].[trg_CalcualteStoresBalance_Insert_Update_DeletePayments]    Script Date: 10/05/2026 6:27:02 PM ******/
+/****** Object:  Trigger [dbo].[trg_CalcualteStoresBalance_Insert_Update_DeletePayments]    Script Date: 12/05/2026 3:27:37 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
