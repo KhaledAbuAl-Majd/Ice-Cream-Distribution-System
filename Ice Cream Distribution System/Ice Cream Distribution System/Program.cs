@@ -1,20 +1,16 @@
-using MoneyMindManager_Presentation;
+using IceCreamPro.Presentation;
+using IceCreamPro.Presentation.Forms;
 
 namespace Ice_Cream_Distribution_System
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            clsPL_Global.SubscribeToErrorOcrruedEvent();
-            Application.Run(new Form1());
+            clsPL_Global.SubscribeToErrorOccurredEvent();
+            Application.Run(new frmLogin());
         }
     }
 }
