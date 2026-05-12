@@ -20,7 +20,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تسجيل عملية الدفع: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تسجيل عملية الدفع: {ex?.InnerException.Message}");
                 return null;
             }
             return payment;
@@ -39,7 +39,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث بيانات الدفع: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث بيانات الدفع: {ex?.InnerException.Message}");
                 return false;
             }
             return true;
@@ -61,7 +61,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف عملية الدفع: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف عملية الدفع: {ex?.InnerException.Message}");
                 return false;
             }
         }
@@ -82,7 +82,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -104,7 +104,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }

@@ -22,7 +22,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حفظ الفاتورة: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حفظ الفاتورة: {ex?.InnerException.Message}");
                 return null;
             }
 
@@ -44,7 +44,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث الفاتورة: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث الفاتورة: {ex?.InnerException.Message}");
                 return false;
             }
 
@@ -67,7 +67,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف الفاتورة: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف الفاتورة: {ex?.InnerException.Message}");
                 return false;
             }
         }
@@ -80,6 +80,7 @@ namespace Data_Access
                 {
                     return await context.Invoices
                         .Include(i => i.Car)
+                         .ThenInclude(c => c.Area)
                         .Include(i => i.Store)
                             .ThenInclude(s => s.Owner)
                         .Include(i => i.InvoiceRecords)
@@ -89,7 +90,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -102,6 +103,7 @@ namespace Data_Access
                 {
                     return await context.Invoices
                         .Include(i => i.Car)
+                            .ThenInclude(c => c.Area)
                         .Include(i => i.Store)
                         .AsNoTracking()
                         .ToListAsync();
@@ -109,7 +111,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }

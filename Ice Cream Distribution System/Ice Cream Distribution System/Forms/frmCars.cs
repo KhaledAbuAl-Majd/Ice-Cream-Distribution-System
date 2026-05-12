@@ -33,9 +33,20 @@ namespace IceCreamPro.Presentation.Forms
             StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 180));
             StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 180));
             card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear });
+            card.Dock = DockStyle.Left;
             Controls.Add(card);
-            StyleGrid(dgv, new Point(460, 60), new Size(680, 500));
-            Controls.Add(dgv);
+
+            Panel pnlGridHolder = new Panel();
+            pnlGridHolder.Location = new Point(460, 60);
+            pnlGridHolder.Size = new Size(this.ClientSize.Width - 480, this.ClientSize.Height - 120);
+            pnlGridHolder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGridHolder.BackColor = Color.Transparent;
+            this.Controls.Add(pnlGridHolder);
+
+            pnlGridHolder.Controls.Add(dgv);
+            dgv.Dock = DockStyle.Fill;
+
+            StyleGrid(dgv);
         }
 
         private void WireEvents()
@@ -58,6 +69,16 @@ namespace IceCreamPro.Presentation.Forms
                 var areas = await AreaService.GetAll();
                 cmbArea.DataSource = areas; cmbArea.DisplayMember = "Name"; cmbArea.ValueMember = "Id";
                 dgv.DataSource = await CarService.GetAll() ?? new();
+
+                foreach (DataGridViewColumn item in dgv.Columns)
+                {
+                    item.Visible = false;
+                }
+
+                dgv.Columns[nameof(Car.Id)].Visible = true;
+                dgv.Columns[nameof(Car.AreaId)].Visible = true;
+                dgv.Columns[nameof(Car.CarDetails)].Visible = true;
+
             }
             catch (Exception ex) { clsPL_MessageBoxs.ShowErrorMessage(ex.Message); }
         }

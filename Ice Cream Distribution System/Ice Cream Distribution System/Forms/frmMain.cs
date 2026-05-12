@@ -39,10 +39,11 @@ namespace IceCreamPro.Presentation.Forms
         {
             Text = "IceCream Pro";
             Size = new Size(1180, 720);
+            //Dock = DockStyle.Fill;
             MinimumSize = new Size(900, 600);
             StartPosition = FormStartPosition.CenterScreen;
             BackColor = AppColors.PrimaryDark;
-            FormBorderStyle = FormBorderStyle.None;
+            //FormBorderStyle = FormBorderStyle.None;
             RightToLeft = RightToLeft.Yes;
             RightToLeftLayout = true;
 
@@ -157,6 +158,8 @@ namespace IceCreamPro.Presentation.Forms
         {
             pnlClose.Click += (s, e) => Application.Exit();
             pnlMinimize.Click += (s, e) => WindowState = FormWindowState.Minimized;
+
+            this.FormClosed += (s,e)=> Application.Exit();
 
             btnDashboard.Click += (s, e) => Navigate(btnDashboard, new frmDashboard());
             btnProducts.Click += (s, e) => Navigate(btnProducts, new frmProducts());

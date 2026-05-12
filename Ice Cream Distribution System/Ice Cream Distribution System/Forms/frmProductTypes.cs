@@ -26,10 +26,24 @@ namespace IceCreamPro.Presentation.Forms
             StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 108));
             StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 108));
             card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear });
+            card.Dock = DockStyle.Left;
             Controls.Add(card);
 
-            StyleGrid(dgv, new Point(460, 60), new Size(680, 400));
-            Controls.Add(dgv);
+            //StyleGrid(dgv, new Point(460, 60), new Size(680, 400));
+            //Controls.Add(dgv);
+
+
+            Panel pnlGridHolder = new Panel();
+            pnlGridHolder.Location = new Point(460, 60);
+            pnlGridHolder.Size = new Size(this.ClientSize.Width - 480, this.ClientSize.Height - 120);
+            pnlGridHolder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGridHolder.BackColor = Color.Transparent;
+            this.Controls.Add(pnlGridHolder);
+
+            pnlGridHolder.Controls.Add(dgv);
+            dgv.Dock = DockStyle.Fill;
+
+            StyleGrid(dgv);
         }
 
         private void WireEvents()
@@ -42,7 +56,18 @@ namespace IceCreamPro.Presentation.Forms
 
         private async Task LoadAsync()
         {
-            try { dgv.DataSource = await ProductTypeService.GetAll() ?? new(); }
+            try {
+                dgv.DataSource = await ProductTypeService.GetAll() ?? new();
+
+                foreach (DataGridViewColumn item in dgv.Columns)
+                {
+                    item.Visible = false;
+                }
+
+                dgv.Columns[nameof(ProductType.Id)].Visible = true;
+                dgv.Columns[nameof(ProductType.Name)].Visible = true;
+
+            }
             catch (Exception ex) { clsPL_MessageBoxs.ShowErrorMessage(ex.Message); }
         }
 

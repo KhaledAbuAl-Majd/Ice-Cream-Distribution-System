@@ -69,6 +69,21 @@ namespace IceCreamPro.Presentation
             dgv.EnableHeadersVisualStyles = false;
             dgv.GridColor = AppColors.BorderColor;
             dgv.RowTemplate.Height = 40;
+            dgv.ScrollBars = ScrollBars.Both;
+            dgv.Dock = DockStyle.Fill;
+        }
+
+        public static void StyleGrid(DataGridView dgv)
+        {
+            dgv.BackgroundColor = AppColors.PrimaryCard;
+            dgv.BorderStyle = BorderStyle.None;
+            dgv.RowHeadersVisible = false;
+            dgv.AllowUserToAddRows = false;
+            dgv.ReadOnly = true;
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            // ... باقي ألوان الـ DefaultCellStyle والـ HeaderCellStyle اللي إنت عاملها ...
+            dgv.ScrollBars = ScrollBars.Both;
         }
     }
 }

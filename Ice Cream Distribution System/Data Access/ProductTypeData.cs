@@ -20,7 +20,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة نوع المنتج: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة نوع المنتج: {ex?.InnerException.Message}");
                 return null;
             }
             return type;
@@ -39,7 +39,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث نوع المنتج: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث نوع المنتج: {ex?.InnerException.Message}");
                 return false;
             }
             return true;
@@ -61,7 +61,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء الحذف: {ex.Message}. تأكد أنه لا توجد أصناف مرتبطة بهذا النوع.");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء الحذف: {ex?.InnerException.Message}. تأكد أنه لا توجد أصناف مرتبطة بهذا النوع.");
                 return false;
             }
         }
@@ -79,7 +79,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -97,7 +97,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }

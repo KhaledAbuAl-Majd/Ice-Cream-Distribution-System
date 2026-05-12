@@ -20,7 +20,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة الصنف: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة الصنف: {ex?.InnerException.Message}");
                 return null;
             }
             return product;
@@ -39,7 +39,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث الصنف: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث الصنف: {ex?.InnerException.Message}");
                 return false;
             }
             return true;
@@ -61,7 +61,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف الصنف: {ex.Message}. تأكد أنه غير مرتبط بفواتير أو عهدة.");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف الصنف: {ex?.InnerException.Message}. تأكد أنه غير مرتبط بفواتير أو عهدة.");
                 return false;
             }
         }
@@ -79,7 +79,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -98,7 +98,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }

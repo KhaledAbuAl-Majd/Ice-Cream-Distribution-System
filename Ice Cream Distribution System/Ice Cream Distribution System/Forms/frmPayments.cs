@@ -20,7 +20,7 @@ namespace IceCreamPro.Presentation.Forms
             BackColor = AppColors.PrimaryDark; RightToLeft = RightToLeft.Yes; RightToLeftLayout = true;
             Controls.Add(new Label { Text = "إدارة المدفوعات", ForeColor = AppColors.TextPrimary, Font = new Font("Segoe UI", 14f, FontStyle.Bold), AutoSize = true, Location = new Point(20, 20) });
 
-            var card = new Guna2Panel { Size = new Size(420, 330), Location = new Point(20, 60), FillColor = AppColors.PrimaryCard, BorderRadius = 14 };
+            var card = new Guna2Panel { Size = new Size(420, 600), Location = new Point(20, 60), FillColor = AppColors.PrimaryCard, BorderRadius = 14 };
             StyleLabel(card, "المندوب", new Point(20, 20));
             cmbRep.Size = new Size(340, 40); cmbRep.Location = new Point(20, 42);
             cmbRep.FillColor = AppColors.PrimaryDark; cmbRep.ForeColor = AppColors.TextPrimary;
@@ -40,14 +40,26 @@ namespace IceCreamPro.Presentation.Forms
             StyleLabel(card, "ملاحظات", new Point(20, 252));
             txtNotes = StyleTextBox(card, "اختياري", new Point(20, 274));
 
-            StyleButton(btnSave, "💾 حفظ", AppColors.AccentBlue, new Point(20, 284));
-            StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 284));
-            StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 284));
-            card.Size = new Size(420, 332);
+            StyleButton(btnSave, "💾 حفظ", AppColors.AccentBlue, new Point(20, 350));
+            StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 350));
+            StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 350));
+            card.Size = new Size(420, 600);
+            card.Dock = DockStyle.Left;
             card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear });
             Controls.Add(card);
-            StyleGrid(dgv, new Point(460, 60), new Size(680, 560));
-            Controls.Add(dgv);
+            dgv.ScrollBars = ScrollBars.Both;
+
+            Panel pnlGridHolder = new Panel();
+            pnlGridHolder.Location = new Point(460, 60);
+            pnlGridHolder.Size = new Size(this.ClientSize.Width - 480, this.ClientSize.Height - 120);
+            pnlGridHolder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGridHolder.BackColor = Color.Transparent;
+            this.Controls.Add(pnlGridHolder);
+
+            pnlGridHolder.Controls.Add(dgv);
+            dgv.Dock = DockStyle.Fill;
+
+            StyleGrid(dgv);
         }
 
         private void WireEvents()
@@ -73,6 +85,17 @@ namespace IceCreamPro.Presentation.Forms
                 var stores = await StoreService.GetAll();
                 cmbStore.DataSource = stores; cmbStore.DisplayMember = "Id"; cmbStore.ValueMember = "Id";
                 dgv.DataSource = await PaymentService.GetAll() ?? new();
+
+                foreach (DataGridViewColumn item in dgv.Columns)
+                {
+                    item.Visible = false;
+                }
+
+                dgv.Columns[nameof(Payment.Id)].Visible = true;
+                dgv.Columns[nameof(Payment.PayedValue)].Visible = true;
+                dgv.Columns[nameof(Payment.RepresentativeId)].Visible = true;
+                dgv.Columns[nameof(Payment.StoreId)].Visible = true;
+                dgv.Columns[nameof(Payment.Notes)].Visible = true;
             }
             catch (Exception ex) { clsPL_MessageBoxs.ShowErrorMessage(ex.Message); }
         }
