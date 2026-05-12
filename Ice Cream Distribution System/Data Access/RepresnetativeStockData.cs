@@ -22,7 +22,7 @@ namespace Data_Access
         //    }
         //    catch (Exception ex)
         //    {
-        //        clsGlobalEvents.RaiseErrorEvent("حدث خطأ أثناء إضافة عهدة المندوب: " + ex.Message);
+        //        clsGlobalEvents.RaiseErrorEvent("حدث خطأ أثناء إضافة عهدة المندوب: " + ex?.InnerException.Message);
         //        return null;
         //    }
 
@@ -44,7 +44,7 @@ namespace Data_Access
         //    }
         //    catch (Exception ex)
         //    {
-        //        clsGlobalEvents.RaiseErrorEvent("حدث خطأ أثناء تحديث بيانات العهدة: " + ex.Message);
+        //        clsGlobalEvents.RaiseErrorEvent("حدث خطأ أثناء تحديث بيانات العهدة: " + ex?.InnerException.Message);
         //        return false;
         //    }
 
@@ -67,7 +67,7 @@ namespace Data_Access
         //    }
         //    catch (Exception ex)
         //    {
-        //        clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف سجل العهدة: {ex.Message}");
+        //        clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف سجل العهدة: {ex?.InnerException.Message}");
         //        return false;
         //    }
         //}
@@ -88,7 +88,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -108,7 +108,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }

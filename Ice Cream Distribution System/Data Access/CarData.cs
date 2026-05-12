@@ -22,7 +22,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
 
@@ -44,7 +44,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return false;
             }
 
@@ -67,7 +67,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent("لا يمكن حذف السيارة لارتباطها ببيانات أخرى: " + ex.Message);
+                clsGlobalEvents.RaiseErrorEvent("لا يمكن حذف السيارة لارتباطها ببيانات أخرى: " + ex?.InnerException.Message);
                 return false;
             }
         }
@@ -85,7 +85,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -104,7 +104,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }

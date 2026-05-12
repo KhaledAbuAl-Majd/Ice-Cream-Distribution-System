@@ -40,10 +40,24 @@ namespace IceCreamPro.Presentation.Forms
             StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 248));
             StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 248));
             card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear });
+            card.Dock = DockStyle.Left;
             Controls.Add(card);
 
-            StyleGrid(dgv, new Point(460, 60), new Size(680, 560));
-            Controls.Add(dgv);
+            //StyleGrid(dgv, new Point(460, 60), new Size(680, 560));
+
+            Panel pnlGridHolder = new Panel();
+            pnlGridHolder.Location = new Point(460, 60);
+            pnlGridHolder.Size = new Size(this.ClientSize.Width - 480, this.ClientSize.Height - 120);
+            pnlGridHolder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGridHolder.BackColor = Color.Transparent;
+            this.Controls.Add(pnlGridHolder);
+
+            // إضافة الـ Grid جوه البانل
+            pnlGridHolder.Controls.Add(dgv);
+            dgv.Dock = DockStyle.Fill; // هنا الـ Fill هيشتغل صح لأنه جوه البانل
+
+            // منادي الستايل (بدون Dock وبدون Location وبدون Size)
+            StyleGrid(dgv);
         }
 
         private void WireEvents()
@@ -66,6 +80,19 @@ namespace IceCreamPro.Presentation.Forms
                 var types = await ProductTypeService.GetAll();
                 cmbType.DataSource = types; cmbType.DisplayMember = "Name"; cmbType.ValueMember = "Id";
                 dgv.DataSource = await ProductService.GetAll() ?? new();
+
+                foreach(DataGridViewColumn item in dgv.Columns)
+                {
+                    item.Visible = false;
+                }
+
+                dgv.Columns[nameof(Product.Id)].Visible = true;
+                //dgv.Columns[nameof(Product.Id)].HeaderText = "ID";
+
+                dgv.Columns[nameof(Product.Name)].Visible = true; 
+                dgv.Columns[nameof(Product.Price)].Visible = true;
+
+
             }
             catch (Exception ex) { clsPL_MessageBoxs.ShowErrorMessage(ex.Message); }
         }

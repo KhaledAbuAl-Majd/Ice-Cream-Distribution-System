@@ -35,9 +35,20 @@ namespace IceCreamPro.Presentation.Forms
             StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 330));
             StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 330));
             card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear });
+            card.Dock = DockStyle.Left;
             Controls.Add(card);
-            StyleGrid(dgv, new Point(460, 60), new Size(680, 560));
-            Controls.Add(dgv);
+
+            Panel pnlGridHolder = new Panel();
+            pnlGridHolder.Location = new Point(460, 60);
+            pnlGridHolder.Size = new Size(this.ClientSize.Width - 480, this.ClientSize.Height - 120);
+            pnlGridHolder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGridHolder.BackColor = Color.Transparent;
+            this.Controls.Add(pnlGridHolder);
+
+            pnlGridHolder.Controls.Add(dgv);
+            dgv.Dock = DockStyle.Fill;
+
+            StyleGrid(dgv);
         }
 
         private void WireEvents()
@@ -56,26 +67,47 @@ namespace IceCreamPro.Presentation.Forms
 
         private async Task LoadAsync()
         {
-            try { dgv.DataSource = await UserService.GetAll() ?? new(); }
+            try { 
+                dgv.DataSource = await UserService.GetAll() ?? new();
+
+                foreach (DataGridViewColumn item in dgv.Columns)
+                {
+                    item.Visible = false;
+                }
+
+                dgv.Columns[nameof(User.UserId)].Visible = true;
+                dgv.Columns[nameof(User.PersonId)].Visible = true;
+                dgv.Columns[nameof(User.UserName)].Visible = true;
+                dgv.Columns[nameof(User.IsActive)].Visible = true;
+                dgv.Columns[nameof(User.PasswordHash)].Visible = true;
+            }
             catch (Exception ex) { clsPL_MessageBoxs.ShowErrorMessage(ex.Message); }
         }
 
         private async void BtnSave_Click(object? s, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtUsername.Text)) { clsPL_MessageBoxs.ShowErrorMessage("أدخل اسم المستخدم"); return; }
+            if (string.IsNullOrWhiteSpace(txtName.Text)) { clsPL_MessageBoxs.ShowErrorMessage("أدخل اسم الشخص"); return; }
             try
             {
                 if (_selected is null)
                 {
                     if (string.IsNullOrWhiteSpace(txtPassword.Text)) { clsPL_MessageBoxs.ShowErrorMessage("أدخل كلمة المرور"); return; }
-                    var user = new User { UserName = txtUsername.Text.Trim(), IsActive = true, Person = new Person { PersonName = txtName.Text.Trim(), Phone = txtPhone.Text.Trim() } };
-                    await UserService.Add(user, txtPassword.Text);
+                    var user = new User { UserName = txtUsername.Text.Trim(), IsActive = true, Person = new Person { PersonName = txtName.Text.Trim(), 
+                        Phone = txtPhone.Text.Trim() } };
+                   var result =  await UserService.Add(user, txtPassword.Text);
+
+                    if (result is null)
+                        return;
                 }
                 else
                 {
                     _selected.UserName = txtUsername.Text.Trim();
                     if (_selected.Person != null) { _selected.Person.PersonName = txtName.Text.Trim(); _selected.Person.Phone = txtPhone.Text.Trim(); }
-                    await UserService.Update(_selected);
+                   var result = await UserService.Update(_selected);
+
+                    if (!result)
+                        return;
                 }
                 clsPL_MessageBoxs.ShowSuccessMessage("تم الحفظ"); ClearForm(); await LoadAsync();
             }

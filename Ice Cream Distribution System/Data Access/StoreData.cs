@@ -20,7 +20,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة المحل: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء إضافة المحل: {ex?.InnerException.Message}");
                 return null;
             }
             return store;
@@ -39,7 +39,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث بيانات المحل: {ex.Message}");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء تحديث بيانات المحل: {ex?.InnerException.Message}");
                 return false;
             }
             return true;
@@ -61,7 +61,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف المحل: {ex.Message}. تأكد من عدم وجود فواتير مرتبطة به.");
+                clsGlobalEvents.RaiseErrorEvent($"حدث خطأ أثناء حذف المحل: {ex?.InnerException.Message}. تأكد من عدم وجود فواتير مرتبطة به.");
                 return false;
             }
         }
@@ -80,7 +80,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -100,7 +100,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }

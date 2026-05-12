@@ -5,9 +5,6 @@ namespace IceCreamPro.Presentation.Forms
 {
     public class frmLogin : Form
     {
-        // ─────────────────────────────────────────────────────────────
-        //  بيانات الأدمن الافتراضي — بيتضاف مرة واحدة عند أول تشغيل
-        // ─────────────────────────────────────────────────────────────
         private const string DefaultAdminUser = "admin";
         private const string DefaultAdminPass = "Admin@1234";
 
@@ -25,19 +22,16 @@ namespace IceCreamPro.Presentation.Forms
         {
             BuildUI();
             WireEvents();
-            // Seed الأدمن في الخلفية بدون ما يعطّل الـ UI
             _ = SeedDefaultAdminAsync();
         }
 
-        // ═════════════════════════════════════════════════════════════
-        //  Seed الأدمن الافتراضي — يشتغل مرة واحدة فقط لو مش موجود
-        // ═════════════════════════════════════════════════════════════
+
         private static async Task SeedDefaultAdminAsync()
         {
             try
             {
                 var existing = await UserService.Get(DefaultAdminUser);
-                if (existing is not null) return;   // موجود بالفعل
+                if (existing is not null) return; 
 
                 var adminUser = new Ice_Cream_Distribution_System.Models.User
                 {
@@ -52,18 +46,14 @@ namespace IceCreamPro.Presentation.Forms
                     }
                 };
 
-                // UserService.Add بيعمل BCrypt للباسورد تلقائياً
+
                 await UserService.Add(adminUser, DefaultAdminPass);
             }
             catch
             {
-                // لو في مشكلة اتصال بالـ DB نتجاهلها — ما تأثرش على الـ Login
+
             }
         }
-
-        // ═════════════════════════════════════════════════════════════
-        //  بناء الـ UI
-        // ═════════════════════════════════════════════════════════════
         private void BuildUI()
         {
             Text = "IceCream Pro";
@@ -74,13 +64,12 @@ namespace IceCreamPro.Presentation.Forms
             RightToLeft = RightToLeft.Yes;
             RightToLeftLayout = true;
 
-            // زر الإغلاق
             pnlClose.Size = new Size(16, 16);
             pnlClose.Location = new Point(16, 16);
             pnlClose.BackColor = AppColors.Danger;
             pnlClose.Cursor = Cursors.Hand;
 
-            // الكارد الرئيسي
+
             pnlCard.Size = new Size(380, 480);
             pnlCard.Location = new Point(40, 55);
             pnlCard.FillColor = AppColors.PrimaryCard;
@@ -171,7 +160,6 @@ namespace IceCreamPro.Presentation.Forms
             btnLogin.BorderRadius = 12;
             btnLogin.Cursor = Cursors.Hand;
 
-            // ─── بوكس تلميح الأدمن الافتراضي ─────────────────────────
             var pnlHint = new Panel
             {
                 Size = new Size(340, 56),
@@ -212,9 +200,6 @@ namespace IceCreamPro.Presentation.Forms
             Controls.AddRange(new Control[] { pnlCard, pnlClose });
         }
 
-        // ═════════════════════════════════════════════════════════════
-        //  ربط الأحداث
-        // ═════════════════════════════════════════════════════════════
         private void WireEvents()
         {
             pnlClose.Click += (s, e) => Application.Exit();
@@ -229,7 +214,6 @@ namespace IceCreamPro.Presentation.Forms
                 if (e.KeyCode == Keys.Enter) BtnLogin_Click(s, e);
             };
 
-            // تحريك الفورم بالسحب من أي مكان
             pnlCard.MouseDown += StartDrag;
             pnlCard.MouseMove += DoDrag;
             MouseDown += StartDrag;
@@ -246,10 +230,6 @@ namespace IceCreamPro.Presentation.Forms
             if (e.Button == MouseButtons.Left)
                 Location = new Point(Location.X + e.X - _drag.X, Location.Y + e.Y - _drag.Y);
         }
-
-        // ═════════════════════════════════════════════════════════════
-        //  منطق تسجيل الدخول
-        // ═════════════════════════════════════════════════════════════
         private async void BtnLogin_Click(object? sender, EventArgs e)
         {
             lblError.Text = "";

@@ -20,7 +20,7 @@ namespace IceCreamPro.Presentation.Forms
             BackColor = AppColors.PrimaryDark; RightToLeft = RightToLeft.Yes; RightToLeftLayout = true;
             Controls.Add(new Label { Text = "إدارة الفواتير", ForeColor = AppColors.TextPrimary, Font = new Font("Segoe UI", 14f, FontStyle.Bold), AutoSize = true, Location = new Point(20, 20) });
 
-            var card = new Guna2Panel { Size = new Size(420, 270), Location = new Point(20, 60), FillColor = AppColors.PrimaryCard, BorderRadius = 14 };
+            var card = new Guna2Panel { Size = new Size(420, 300), Location = new Point(20, 60), FillColor = AppColors.PrimaryCard, BorderRadius = 14 };
             StyleLabel(card, "السيارة", new Point(20, 20));
             cmbCar.Size = new Size(340, 40); cmbCar.Location = new Point(20, 42);
             cmbCar.FillColor = AppColors.PrimaryDark; cmbCar.ForeColor = AppColors.TextPrimary;
@@ -38,13 +38,24 @@ namespace IceCreamPro.Presentation.Forms
             StyleLabel(card, "ملاحظات", new Point(20, 175));
             txtNotes = StyleTextBox(card, "ملاحظات اختيارية", new Point(20, 197));
 
-            StyleButton(btnSave, "💾 حفظ", AppColors.AccentBlue, new Point(20, 228));
-            StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 228));
-            StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 228));
+            StyleButton(btnSave, "💾 حفظ", AppColors.AccentBlue, new Point(20, 250));
+            StyleButton(btnDelete, "🗑 حذف", AppColors.Danger, new Point(148, 250));
+            StyleButton(btnClear, "✖ مسح", AppColors.BorderColor, new Point(276, 250));
             card.Controls.AddRange(new Control[] { btnSave, btnDelete, btnClear });
+            card.Dock = DockStyle.Left;
             Controls.Add(card);
-            StyleGrid(dgv, new Point(460, 60), new Size(680, 560));
-            Controls.Add(dgv);
+
+            Panel pnlGridHolder = new Panel();
+            pnlGridHolder.Location = new Point(460, 60);
+            pnlGridHolder.Size = new Size(this.ClientSize.Width - 480, this.ClientSize.Height - 120);
+            pnlGridHolder.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlGridHolder.BackColor = Color.Transparent;
+            this.Controls.Add(pnlGridHolder);
+
+            pnlGridHolder.Controls.Add(dgv);
+            dgv.Dock = DockStyle.Fill;
+
+            StyleGrid(dgv);
         }
 
         private void WireEvents()
@@ -66,10 +77,21 @@ namespace IceCreamPro.Presentation.Forms
             try
             {
                 var cars = await CarService.GetAll();
-                cmbCar.DataSource = cars; cmbCar.DisplayMember = "CarDetails"; cmbCar.ValueMember = "Id";
+                cmbCar.DataSource = cars; cmbCar.DisplayMember = "Id"; cmbCar.ValueMember = "Id";
                 var stores = await StoreService.GetAll();
                 cmbStore.DataSource = stores; cmbStore.DisplayMember = "Id"; cmbStore.ValueMember = "Id";
                 dgv.DataSource = await InvoiceService.GetAll() ?? new();
+
+                foreach (DataGridViewColumn item in dgv.Columns)
+                {
+                    item.Visible = false;
+                }
+
+                dgv.Columns[nameof(Invoice.Id)].Visible = true;
+                dgv.Columns[nameof(Invoice.CarId)].Visible = true;
+                dgv.Columns[nameof(Invoice.Date)].Visible = true;
+                dgv.Columns[nameof(Invoice.Total)].Visible = true;
+                dgv.Columns[nameof(Invoice.StoreId)].Visible = true;
             }
             catch (Exception ex) { clsPL_MessageBoxs.ShowErrorMessage(ex.Message); }
         }

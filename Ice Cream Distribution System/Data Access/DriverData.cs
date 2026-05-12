@@ -22,7 +22,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
 
@@ -44,7 +44,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return false;
             }
 
@@ -67,7 +67,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent("لا يمكن حذف السائق لارتباطه بورديات سابقة: " + ex.Message);
+                clsGlobalEvents.RaiseErrorEvent("لا يمكن حذف السائق لارتباطه بورديات سابقة: " + ex?.InnerException.Message);
                 return false;
             }
         }
@@ -87,7 +87,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
@@ -108,7 +108,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                clsGlobalEvents.RaiseErrorEvent(ex.Message);
+                clsGlobalEvents.RaiseErrorEvent(ex?.InnerException.Message);
                 return null;
             }
         }
