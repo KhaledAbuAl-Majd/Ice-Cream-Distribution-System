@@ -1,1 +1,2 @@
-"# Ice-Cream-Distribution-System" 
+# Ice-Cream-Distribution-System
+## A fast-paced university project built for learning purposes. Focused on making the core logic work within a limited deadline
